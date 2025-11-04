@@ -15,22 +15,25 @@ export const postRouter = router({
     return post;
   }),
 
-  create: publicProcedure
-    .input(
-      z.object({
-        title: z.string(),
-        content: z.string(),
-      })
-    )
-    .mutation(async ({ input }) => {
-      const slug = slugify(input.title, { lower: true });
-      await db.insert(posts).values({
-        title: input.title,
-        slug,
-        content: input.content,
-      });
-      return { success: true };
-    }),
+  
+ create: publicProcedure
+  .input(
+    z.object({
+      title: z.string(),
+      content: z.string(),
+      categoryId: z.number().optional(), // ✅ this is the line you can update
+    })
+  )
+  .mutation(async ({ input }) => {
+    const slug = slugify(input.title, { lower: true });
+    await db.insert(posts).values({
+      title: input.title,
+      slug,
+      content: input.content,
+      categoryId: input.categoryId, // can be undefined
+    });
+    return { success: true };
+  }),
 
   delete: publicProcedure.input(z.number()).mutation(async ({ input }) => {
     await db.delete(posts).where(eq(posts.id, input));

@@ -1,11 +1,10 @@
-import "./globals.css";
-import { Providers } from "./providers";
+import { TRPCProvider } from "@/providers/TRPCProvider";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <TRPCProvider>{children}</TRPCProvider>
       </body>
     </html>
   );

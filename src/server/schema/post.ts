@@ -1,9 +1,9 @@
-import { pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, integer } from "drizzle-orm/pg-core";
 
 export const posts = pgTable("posts", {
   id: serial("id").primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
-  content: text("content").notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
+  title: text("title"),
+  slug: text("slug"),
+  content: text("content"),
+  categoryId: integer("category_id").$type<number | null>(), // nullable column
 });
